@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Jwt } from "jsonwebtoken";
+import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const userSchema = new Schema({
     username: {
@@ -46,7 +46,7 @@ const userSchema = new Schema({
 }, { timestamps: true })
 
 userSchema.pre("save", async function (next) {
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 userSchema.method.isPasswordCorrect = async function (password) {
